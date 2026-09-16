@@ -4,8 +4,8 @@
 
 **Repository:** `david-steinbroner/laster-toy-turret`  
 **Last updated:** 2026-09-15  
-**Current phase:** Pre-CAD / fit-test definition  
-**V1 target:** Wall-powered 2-axis pan/tilt cat laser turret using the user's removable rechargeable laser pointer. A future battery upgrade must be possible **without reprinting the core turret**.
+**Current phase:** Physical fit validation / Phase 1 coupons  
+**V1 target:** Wall-powered 2-axis pan/tilt cat laser turret using the user's removable rechargeable laser pointer. Future battery power must be possible **without reprinting the core turret**.
 
 ---
 
@@ -31,30 +31,94 @@ The user should not need to copy/paste prior chat history.
 
 ---
 
-# Latest checkpoint — 2026-09-15
+# Latest checkpoint — 2026-09-15 late session
 
-## What changed this session
-- Set up GitHub as the persistent engineering record.
-- Established this `PROJECT_STATE.md` as the living project document.
-- Initialized repo areas for future work: `cad/`, `prints/`, `references/`, `web/`.
-- Confirmed repo path: `david-steinbroner/laster-toy-turret`.
-- Repo is currently public. This does not block the project; visibility can be changed later if desired.
-- Confirmed that the existing Vercel/Three.js model is reference-only. Further web-polishing should not delay real CAD.
+## Physical validation completed / underway
+- **Laser spring-clip coupon printed and physically tested: FITS.**
+- Coupon geometry used the previously successful approximately **15.45 mm internal spring-clip diameter** around the confirmed **16.1 mm laser body**.
+- This is now a validated baseline for the removable laser cradle. Do not reopen this fit unless the full cradle geometry introduces a new interference.
+- **SG90 clearance coupon is currently printing.** It contains three candidate body clearances:
+  - A = **+0.20 mm per side**
+  - B = **+0.35 mm per side**
+  - C = **+0.50 mm per side**
+- User will report which is the smallest clearance that allows the SG90 to insert/remove by hand without force or rattle.
+- First passive-pivot coupon had a modeling defect: printed pegs were floating/not attached. **Do not use that file.**
+- Corrected pivot-only STL was generated as `Laser_Turret_Passive_Pivot_Coupon_v2.stl` with:
+  - 3.0 mm diameter × 7.0 mm tall pegs,
+  - pegs fused to 4.0 mm bases,
+  - hole sizes 3.15 / 3.25 / 3.35 / 3.45 mm,
+  - thin breakaway bridges between samples.
+- Passive-pivot v2 still needs to be printed/tested.
 
-## No manufacturing artifact completed yet
-- No real parametric CAD yet.
-- No fit-test STL yet.
-- No physical fit test yet.
-- No servo horn selected yet.
+## Servo reference locked for CAD
+- User supplied the GrabCAD Tower Pro SG90 model and uploaded the actual CAD package:
+  - `SG90 - Micro Servo 9g - Tower Pro.STEP`
+  - SolidWorks assembly/part files as supplemental references.
+- Use the **uploaded STEP model as the authoritative nominal SG90 mechanical reference** for CAD rather than asking the user to remeasure generic servo body dimensions.
+- Still validate real printed fit against the user's physical servos because SG90 clone tolerances vary.
+- User already owns **4 SG90 servos**. Do not suggest buying more for V1 unless a servo fails.
+
+## Additional turret reference uploaded
+- User uploaded `Laser Turrent 1.0.f3d` plus screenshot of a compact pan/tilt design.
+- Design review conclusion: borrow the **compact upper tilt geometry** idea, especially side-mounted tilt servo + opposite passive support + low centered payload, but **do not copy the large geared base**.
+- Preferred hybrid architecture remains:
+  - simple direct-drive SG90 pan stage below,
+  - compact fork/upright upper mechanism,
+  - side-mounted tilt SG90,
+  - passive pivot opposite,
+  - purpose-built removable laser cradle,
+  - modular electronics/power base.
+
+## Electronics / shopping decisions
+User wants to avoid soldering where practical.
+
+Already owned before this session:
+- **4× SG90 servos**,
+- **5 V wall supply**,
+- PLA,
+- assorted small machine screws/hardware,
+- soldering equipment if absolutely necessary.
+
+User has now **ordered the remaining prototype electronics/wiring items** discussed this session:
+- **1× Seeed Studio XIAO ESP32-C3 with pre-soldered headers**,
+- **Dupont jumper wires**,
+- **lever-style wire connectors** suitable for stranded wire, used as no-solder 5 V / ground distribution.
+
+Power-distribution concept:
+- one multi-port lever connector for **+5 V**,
+- one multi-port lever connector for **GND**,
+- wall supply feeds both rails,
+- both SG90 servos receive 5 V directly from the distribution rail,
+- controller shares ground,
+- do **not** route servo load current through the XIAO regulator.
+
+Current no-solder-first preference:
+- pre-soldered XIAO headers,
+- Dupont jumpers for signal/prototyping,
+- lever connectors for low-voltage power distribution,
+- only solder if later packaging/reliability truly requires it.
+
+## Material
+- **Regular PLA** remains the default target material for Bambu A1.
+- PLA+ is not required for V1 unless a particular snap-fit or impact-loaded part later proves brittle.
+
+## Budget expectation
+- Original project goal of roughly **$25 in new electronics/hardware** remains valid because the user already owned servos, wall supply, screws, and filament.
+- Do not expand the shopping list with speculative bearings, gears, JST kits, special fasteners, etc. unless testing demonstrates a need.
 
 ## Current next steps
-1. Start **parametric fit-test CAD**, not more concept illustration.
-2. Build an **SG90 fit coupon** using supplied servo dimensions with sensible clone clearance.
-3. Build a **laser cradle fit coupon** around the confirmed 16.1 mm body, informed by the prior successful ~15.45 mm spring-clip fit.
-4. Select/measure the actual SG90 horn and make a **horn-to-platform interface test**.
-5. Build a **passive-pivot tolerance test**.
-6. After fit tests are validated, build the upper mechanism.
-7. Then build the modular wall-powered base with the battery-upgrade interface already included.
+1. **Wait for SG90 clearance coupon result.** Record whether A / B / C is best.
+2. Print/test **passive-pivot coupon v2** and choose the smallest hole that rotates freely with minimal wobble.
+3. User will provide **laser pointer weight** when convenient. Use it for balance / torque sanity checking, but it does not block current fit testing.
+4. Select/inspect the actual SG90 horn to lock the horn-to-platform interface. The uploaded SG90 CAD may help, but use the user's actual supplied horn style if there is any mismatch.
+5. Once laser fit + SG90 fit + passive pivot are validated, move immediately into the **first recognizable upper turret assembly**, not more abstract concept work:
+   - compact tilt fork/uprights,
+   - side-mounted SG90,
+   - passive pivot opposite,
+   - removable cradle using the validated 15.45 mm spring-clip behavior,
+   - rotating pan platform interface.
+6. Keep prints small/modular so the user can see progress quickly and avoid long failed prints.
+7. After upper mechanism validation, build the direct-drive pan base and electronics/service bay with future battery-module interface preserved.
 
 ---
 
@@ -71,29 +135,32 @@ Locked product requirements:
 - Design should be compact, serviceable, and not over-engineered.
 - Target printer/material: **Bambu A1, regular PLA**.
 - Printable parts should remain separate/editable where practical.
+- Prefer multiple small printable parts/plates over one huge print job; user wants fast visible progress and early assembly.
 - Final deliverables should eventually include editable parametric CAD, individual STLs, a combined 3MF with meaningful parts kept separate, and small fit-test parts before large prints.
 
 ---
 
 # 2. Locked mechanical architecture
 
-Architecture is inspired by the supplied OpenMV pan/tilt assembly, but geometry must be purpose-built for this laser.
+Architecture is inspired by supplied OpenMV / GrabCAD / Fusion pan-tilt references, but geometry must be purpose-built for this laser.
 
 ## Pan axis
 - One **SG90** sits vertically inside the base.
-- Its horn drives a rotating upper platform.
+- Its horn drives a rotating upper platform directly unless testing proves a reduction stage is necessary.
 - The entire upper assembly rotates with it: tilt fork, tilt SG90, passive pivot, cradle, laser.
 - Keep upper mass low and reasonably balanced.
 - Use gentle software acceleration.
 - Physically validate SG90 pan torque during prototype testing.
+- Avoid a large geared ring/base unless direct drive proves inadequate.
 
 ## Tilt axis
-- U-shaped fork on rotating pan platform.
+- Compact U-shaped fork/uprights on rotating pan platform.
 - One **SG90** mounted on one side.
-- Opposite side uses a **passive pivot / bushing / bearing feature**.
+- Opposite side uses a **passive pivot / bushing feature**.
 - Laser cradle spans the fork.
-- Laser centerline should align with the tilt axis so the laser rotates in place rather than sweeping through solid fork walls.
+- Laser centerline should align closely with the tilt axis so the laser rotates in place rather than sweeping through solid fork walls.
 - Passive side supports the cradle so the tilt servo shaft is not acting as a cantilever.
+- Favor the compact upper-mechanism proportions seen in the uploaded Fusion reference, not its large geared lower base.
 
 ## Laser cradle
 - Removable / quick release.
@@ -101,6 +168,7 @@ Architecture is inspired by the supplied OpenMV pan/tilt assembly, but geometry 
 - Must leave rear micro-USB charging port accessible.
 - Should account for pocket clip/lanyard geometry if those remain attached.
 - No permanent electrical connection to laser.
+- Validated spring-clip baseline: approximately **15.45 mm ID** around the **16.1 mm laser body** fits the actual pointer.
 
 ---
 
@@ -116,6 +184,7 @@ Architecture is inspired by the supplied OpenMV pan/tilt assembly, but geometry 
 | Charging connector | **Micro-USB** |
 | Charging-port location | **Centered on rear/end face** |
 | Permanent modification | **Not allowed** |
+| Validated spring-clip ID | **~15.45 mm fits actual laser** |
 
 Reference photos also show:
 - pocket clip,
@@ -128,14 +197,6 @@ Still useful before final cradle CAD:
 - lanyard clearance if lanyard hardware stays installed,
 - approximate laser mass for servo-load sanity check.
 
-### Prior successful laser fit
-Earlier **Laser Clip V3** reportedly fit this pointer:
-- pointer nominal OD: 16.1 mm,
-- spring clip ID about **15.45 mm**,
-- screw slots **26 mm apart**.
-
-Treat 15.45 mm as empirical spring-clip information, not automatically the final cradle ID.
-
 ---
 
 # 4. Servos
@@ -143,23 +204,28 @@ Treat 15.45 mm as empirical spring-clip information, not automatically the final
 ## Locked servo choice
 **Pan = SG90. Tilt = SG90.**
 
-Supplied SG90 diagrams suggest approximately:
+User already owns **4 physical SG90 servos**.
+
+Nominal reference is now the uploaded Tower Pro SG90 STEP model. Previously supplied drawings suggested approximately:
 - body width: **22.5 mm**,
 - body depth: **11.8–12 mm**,
 - body height: about **22.7–22.8 mm**,
 - mounting-ear overall span in one diagram: **31.8 mm**,
 - standard 3-wire connector.
 
-SG90 clone housings vary. Do not make a tight final cavity based only on generic internet dimensions.
+SG90 clone housings vary, so real physical fit still wins over nominal CAD.
 
-### Required validation
-Either:
-1. measure the exact SG90s in hand, or
-2. print an SG90 fit coupon using the supplied drawings and modest clearance.
+### Current validation
+SG90 body clearance coupon is printing with:
+- A = +0.20 mm per side,
+- B = +0.35 mm per side,
+- C = +0.50 mm per side.
+
+Use the smallest one that inserts/removes without force and does not rattle.
 
 ### Horn
-Exact horn is **not locked**. Need to select the actual horn and validate:
-- type,
+Exact horn interface is **not locked yet**. Need to validate:
+- actual supplied horn style,
 - thickness,
 - effective diameter / arm length,
 - hole pattern,
@@ -170,29 +236,30 @@ Exact horn is **not locked**. Need to select the actual horn and validate:
 # 5. Power architecture
 
 ## V1
-**Wall powered only.**
+**Wall powered only.** User already owns a suitable 5 V wall supply.
 
 Concept:
 
 ```text
-wall power
+wall supply 5 V
    |
-power-input / power module
+   +---- +5 V lever-connector rail ----> pan SG90
+   |                                  -> tilt SG90
+   |                                  -> controller power as appropriate
    |
-   +---- regulated 5 V ----> pan SG90
-   |                     -> tilt SG90
-   |
-   +---- controller power
-            |
-            +-- pan signal
-            +-- tilt signal
+   +---- GND lever-connector rail ----> pan SG90
+                                      -> tilt SG90
+                                      -> controller GND
+
+XIAO GPIO ----------------------------> pan servo signal
+XIAO GPIO ----------------------------> tilt servo signal
 ```
 
 Rules:
-- Do not route servo current through a tiny controller's onboard regulator.
+- Do not route servo current through the XIAO regulator.
 - Servos and controller share ground.
-- Provide enough 5 V current headroom for two SG90 transient loads.
-- Exact wall-power connector/cable is not locked yet.
+- Provide enough current headroom for two SG90 transient loads.
+- Favor no-solder lever connectors / jumper wiring during prototype phase.
 
 ## Future battery requirement
 V1 must include a standardized **power/battery expansion interface**.
@@ -211,25 +278,24 @@ Possible form: rear cartridge, bottom drawer, bolt-on pod, or removable service/
 
 # 6. Controller
 
-A full Arduino Uno is considered unnecessary for the final product.
+**Seeed Studio XIAO ESP32-C3 with pre-soldered headers** is now the selected V1 controller and has been ordered.
 
-Leading concept: **Seeed XIAO ESP32-C3** because it is tiny and leaves room for future wireless control. Not purchased/locked yet.
-
-Controller needs:
-- 2 servo signal outputs,
-- program storage for autonomous movement,
-- convenient programming/update path,
-- compact footprint,
-- no direct servo-current burden.
+Reasons:
+- tiny footprint,
+- enough GPIO for two servo signals,
+- USB-C programming,
+- Wi-Fi/Bluetooth available for future control,
+- pre-soldered headers support the user's preference to avoid soldering.
 
 ---
 
 # 7. Soldering and serviceability
 
-- User owns a soldering gun and is open to soldered turret wiring.
+- User prefers **not to solder** if a practical no-solder route exists.
+- Prototype wiring should therefore use pre-soldered XIAO headers, Dupont jumpers, and lever connectors.
 - Laser itself must never be soldered into the turret.
-- Likely final approach: soldered internal harnesses with removable connectors.
 - Servos, controller, and power module should remain replaceable.
+- Soldering remains a fallback only if final compact packaging/reliability requires it.
 
 ---
 
@@ -252,8 +318,6 @@ Automatic beam control later would require either:
 1. a small mechanical actuator that moves the slider, or
 2. electrical modification of the laser, which is currently outside requirements.
 
-The “Show Beam” control in the web prototype is visualization only.
-
 ---
 
 # 9. Expected printed parts
@@ -262,8 +326,8 @@ Likely V1 parts:
 1. **Base enclosure** — lower SG90 mount, controller/power routing, future battery interface.
 2. **Service lid / access cover**.
 3. **Rotating pan platform** — interfaces to lower SG90 horn.
-4. **Tilt fork** — SG90 on one side, passive pivot on the other.
-5. **Removable laser cradle** — 16.1 mm pointer, switch + charging access.
+4. **Tilt fork / compact uprights** — SG90 on one side, passive pivot on the other.
+5. **Removable laser cradle** — validated clip fit, switch + charging access.
 6. **Passive pivot / bushing piece**.
 7. **V1 wall-power module / insert** — removable/replaceable.
 8. **Future battery module** — later, same interface, no core reprint.
@@ -277,10 +341,10 @@ Possible extras:
 
 # 10. Legacy work worth preserving
 
-## Laser Clip V3
-- Successful 16.1 mm pointer fit.
-- ~15.45 mm clip ID worked.
-- Screw slots 26 mm apart.
+## Laser Clip V3 / current fit coupon
+- 16.1 mm pointer.
+- ~15.45 mm spring-clip ID.
+- This geometry has now been **revalidated physically in the current fit coupon**.
 
 ## Lower servo/base Option C V7
 Reported working:
@@ -295,27 +359,35 @@ Previously: `sg90_sideways_bracket_editable_parts_v1.3mf`
 - walls/floor as separate editable Bambu objects,
 - unresolved rear wire-notch location.
 
-**Superseded by the current U-fork architecture. Do not revert unless explicitly requested.**
+**Superseded by the current compact U-fork/upright architecture. Do not revert unless explicitly requested.**
 
 ## Arduino Uno base
-Earlier Uno peg-position work is likely obsolete because the final controller should be much smaller.
+Obsolete for final V1 because controller is now XIAO ESP32-C3.
 
 ---
 
-# 11. OpenMV / GrabCAD reference
+# 11. Reference models
 
-Supplied package: `pan-tilt-assembly-1.snapshot.9.zip`
-
-Useful source parts include STEP/STL files for base, arm, tray, stand/adaptors and assembly-guide images.
-
-Use only as a **mechanical topology reference**:
+## OpenMV / GrabCAD reference
+Use only as mechanical topology reference:
 - vertical pan servo,
 - rotating upper stage,
 - U-fork,
 - side-mounted tilt servo,
 - opposite passive pivot.
 
-Do **not** simply scale the camera assembly. The laser design should be smaller, lighter, and purpose-built.
+## Tower Pro SG90 GrabCAD model
+User supplied the GrabCAD link and uploaded the STEP/SolidWorks files. Treat the uploaded STEP as the nominal servo reference.
+
+## Uploaded Fusion turret (`Laser Turrent 1.0.f3d`)
+Useful ideas to borrow:
+- compact upper tilt assembly,
+- side-mounted servo near load,
+- passive support opposite,
+- low centered payload,
+- triangular/braced uprights if useful.
+
+Do not copy its large geared base unless direct-drive pan fails testing.
 
 ---
 
@@ -324,97 +396,42 @@ Do **not** simply scale the camera assembly. The laser design should be smaller,
 Latest live visualization:
 `https://laser-turret-v3-davidsteinbroner-2472.vercel.app`
 
-Features:
-- touch orbit / pinch zoom,
-- pan/tilt sliders,
-- auto motion,
-- beam visualization,
-- mechanism/exploded modes,
-- multiple views.
-
-History:
-- early versions had laser clipping through geometry,
-- later versions improved hierarchy,
-- mechanism/exploded views remain imperfect,
-- further polishing is lower priority than actual CAD.
-
-**Never treat the Three.js model as manufacturing-authoritative geometry.**
+Reference only. **Never treat the Three.js model as manufacturing-authoritative geometry.**
 
 ---
 
-# 13. Print-readiness adversarial review
+# 13. Current manufacturing status
 
-A technical drawing and adversarial redline were created. Conclusion:
+Phase 1 is actively underway.
 
-**NOT READY TO PRINT YET**
+Completed:
+- laser dimensions substantially defined,
+- SG90 nominal CAD reference supplied,
+- laser clip fit physically validated,
+- first fit-test STLs created,
+- corrected passive-pivot STL created after first peg-attachment defect was caught.
 
-Outstanding manufacturing issues:
-- exact dimensions missing on some features,
-- tolerances/fit clearances not defined,
-- horn/spline interface not finalized,
-- screw sizes/hole diameters not finalized,
-- wall thickness/minimum feature sizes not locked,
-- new cradle retention not validated,
-- passive pivot fit incomplete,
-- wire-routing clearances not verified,
-- service-lid mounting not finalized,
-- pan-load margin not physically validated,
-- print orientations/support strategy not defined,
-- chamfers/fillets/elephant-foot allowances not finalized,
-- no final watertight CAD solids yet.
-
-Resolved since that review:
-- laser length = **96.5 mm**,
-- laser OD = **16.1 mm**,
-- slide switch substantially defined,
-- charging connector/location known,
-- both servo models = **SG90**,
-- V1 = wall powered,
-- battery upgrade = modular.
+Still unresolved before upper-mechanism CAD is locked:
+- SG90 printed clearance selection,
+- passive-pivot printed clearance selection,
+- horn-to-platform interface,
+- approximate laser mass / balance sanity check,
+- pocket clip / lanyard interference in the full cradle,
+- final wire routing and service details.
 
 ---
 
-# 14. Remaining genuine unknowns
-
-High priority before final manufacturing CAD:
-1. Actual SG90 fit / mounting-ear geometry on the exact servos.
-2. Exact SG90 horn choice and dimensions.
-3. Pocket-clip/lanyard clearance if those remain installed while mounted.
-4. Approximate laser mass.
-5. Desired pan and tilt limits, unless selected during engineering.
-
-Can be chosen during design:
-- base diameter/height,
-- wall thickness,
-- platform thickness,
-- PLA tolerances/clearances,
-- screw strategy,
-- service-lid fastening,
-- print orientation,
-- chamfers/fillets,
-- cable routing,
-- battery-interface geometry.
-
-Electronics still to lock:
-- controller model,
-- wall-power connector/cable,
-- power-distribution method,
-- optional mounted-laser charging lead.
-
----
-
-# 15. Build sequence
+# 14. Build sequence
 
 ## Phase 1 — fit coupons
-Print/test:
-1. SG90 cavity / mounting-ear coupon.
-2. Laser cradle ring/clip coupon.
-3. Passive-pivot tolerance samples.
-4. Horn-to-platform interface test.
+1. **Laser cradle ring/clip coupon — DONE, fits.**
+2. **SG90 cavity clearance coupon — PRINTING / awaiting A-B-C result.**
+3. **Passive-pivot tolerance samples v2 — generated, needs print/test.**
+4. Horn-to-platform interface test — next after actual horn style is confirmed.
 
 ## Phase 2 — upper mechanism
-Print:
-- tilt fork,
+As soon as coupon results are known, build:
+- compact tilt fork/uprights,
 - cradle,
 - passive pivot,
 - rotating platform.
@@ -438,7 +455,7 @@ Validate:
 - platform concentricity,
 - pan torque,
 - wire routing,
-- controller fit,
+- XIAO + lever-connector fit,
 - serviceability.
 
 ## Phase 4 — complete V1
@@ -449,9 +466,9 @@ Design later against the interface already built into V1. Core turret remains un
 
 ---
 
-# 16. CAD/output requirements
+# 15. CAD/output requirements
 
-Move next into **parametric CAD**.
+Move from fit tests into **parametric CAD** as soon as the SG90/pivot results are known.
 
 Rules:
 - dimensions should be variables, not scattered magic numbers,
@@ -459,9 +476,10 @@ Rules:
 - export individual STLs,
 - export combined 3MF with meaningful parts separate,
 - retain editable source,
-- generate fit-test STLs separately.
+- generate fit-test STLs separately,
+- prefer small/fast validation prints before committing to large prints.
 
-Suggested parameters:
+Current parameter set:
 
 ```text
 laser_diameter = 16.1
@@ -469,14 +487,15 @@ laser_length = 96.5
 laser_switch_length = 14.5
 laser_switch_width = 7.5
 laser_switch_from_front = 26.4
+cradle_clip_id_validated = 15.45
 
-servo_body_w = [verify actual SG90]
-servo_body_d = [verify actual SG90]
-servo_body_h = [verify actual SG90]
+servo_nominal_reference = uploaded Tower Pro SG90 STEP
+servo_fit_clearance = [await A/B/C physical result]
 
-wall = [design value]
-fit_clearance = [design value]
-cradle_interference = [derive from prior ~15.45 mm fit]
+passive_pivot_pin = 3.0
+passive_pivot_hole = [await 3.15/3.25/3.35/3.45 physical result]
+
+laser_mass = [user will provide]
 pan_range = [TBD]
 tilt_min = [TBD]
 tilt_max = [TBD]
@@ -486,20 +505,26 @@ Source structure must allow controller replacement and future battery module wit
 
 ---
 
-# 17. Design principles that must not accidentally change
+# 16. Design principles that must not accidentally change
 
 - Both servos are **SG90**.
+- User owns **4 SG90s** already.
 - Laser OD is **16.1 mm**.
 - Laser length is **96.5 mm**.
+- ~15.45 mm spring-clip ID is now physically validated on the actual laser.
 - Laser remains easily removable.
 - Never solder or permanently wire the laser into the turret.
 - Keep slide switch accessible.
 - Keep rear micro-USB accessible.
-- V1 is wall powered.
+- V1 is wall powered from user's existing 5 V supply.
+- XIAO ESP32-C3 with pre-soldered headers is selected/ordered.
+- Prototype wiring should avoid soldering where practical.
 - Future battery module is additive/replaceable; **no core-turret reprint**.
-- Lower servo pans the entire upper assembly.
-- Tilt servo + passive pivot support laser from both sides.
+- Lower SG90 pans the entire upper assembly.
+- Tilt SG90 + passive pivot support laser from both sides.
 - Keep upper mass low enough for SG90 pan duty.
+- Prefer direct-drive pan unless testing proves otherwise.
 - Prefer modular/serviceable parts over sealed monolithic construction.
+- Prefer multiple small prints / fast visible progress over one huge print.
 - Target Bambu A1 / regular PLA.
 - Concept images and web model are not dimensionally authoritative CAD.
