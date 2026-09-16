@@ -1,39 +1,34 @@
 # Laser Turret — Living Build Tracker
 
-**Last updated: September 16, 2026 ~16:17 Austin. CURRENT: horn recess coupon V2 provided; user was just instructed how to add a brim; V2 print/result NOT reported.** Start with [latest handoff](SESSION_HANDOFF_2026-09-16.md). `PROJECT_STATE.md` includes an older September 15 checkpoint with now-obsolete 'coupons printing' claims; this tracker and handoff supersede those statuses. Do not mistake a prior assistant's claims of mesh verification for independently verified printability.
+**Last updated September 16, 2026 ~18:40 Austin. CURRENT STOP: V5 hub-only horn test disc delivered, user will print/test and report. NO V5 physical fit result yet.** Read [latest handoff](SESSION_HANDOFF_2026-09-16.md) first and historical requirements in [PROJECT_STATE.md](PROJECT_STATE.md). Historical Sep 15 status in PROJECT_STATE is superseded by these newer records.
 
-## Confirmed tests and components
-- [x] Removable laser clip fits: nominal 15.45 mm clip ID, laser 16.1 mm diameter and 96.5 mm length.
-- [x] Smallest SG90 body-fit coupon (~22.4 mm nominal) fits user's servo.
-- [x] Second-largest passive pivot coupon chosen: nominal 3.35 mm bore with 3.0 mm peg.
-- [x] User owns four SG90 servos and multiple physical horn styles; servo CAD previously supplied.
-- [x] Straight double-sided horn selected as prototype candidate. User **physically confirmed two horn mounting holes line up with cradle disc holes.** Short single horn too short. Long horn may need later clearance/trim test; DO NOT cut yet.
-- [x] Horn's raised central circular boss (~0.5 mm tall by user estimate) prevents horn arms sitting flush on original flat cradle disc. Recess is REQUIRED; boss diameter and correct recess fit still UNVERIFIED.
+## Physically validated
+- [x] Removable laser clip fits: nominal 15.45 mm ID; laser diameter 16.1 mm, length 96.5 mm.
+- [x] Smallest SG90 body-fit coupon (~22.4 mm nominal) fits.
+- [x] Passive pivot: second-largest coupon, nominal 3.35 mm bore with 3.0 mm peg, fits best.
+- [x] Straight double-sided servo horn selected; original cradle disc holes aligned physically. One-sided horn too short. Four SG90 servos owned; nominal CAD previously supplied.
+- [x] Raised circular horn center boss (~0.5 mm tall user estimate) keeps arms from sitting flush on flat cradle disc.
+- [x] V2 four-disc horn recess coupons were printed sufficiently for a fit test; **user reports DISC #2 IS BEST.** Do not infer all four printed perfectly or that #2 is fully flush: the user subsequently requested removing arm channels and enlarging the boss pocket.
 
-## Four-piece quick upper tilt prototype
-Files previously supplied in chat, NOT confirmed committed to repo: `01_fork_base.stl`, `02_passive_upright.stl`, `03_servo_upright.stl`, `04_laser_cradle_horn_TEST_FIT.stl` and cradle test-fit 3MF.
-- [x] At least one fork base physically printed successfully: user said its two sides were good; user proceeded to print another. Exact count of satisfactory bases not independently established.
-- [x] At least one upright physically printed, but underside facing support has rough/ugly surface.
-- [x] User physically handled fork/cradle parts, demonstrated cradle has passive peg on ONE side, horn disc on OTHER side. Single peg is intentional. Photo shows several printed parts. Do not infer whole assembly complete.
-- [ ] Servo upright final print success / full frame fit and squareness verified.
-- [ ] Cradle passive pivot installed between complete uprights and free motion checked.
-- [ ] Horn fastened flush to cradle, center servo screw access checked, servo installed and powered test completed.
-- [ ] Laser OFF inserted; switch, charging port, clearance/balance checked.
+## Horn-disc iteration: precise chronology
+1. V1 four-disc `horn_disc_recess_coupons.stl/.scad`: user reported 1 full spaghetti, 1 OK, 2 half spaghetti.
+2. V2 `horn_disc_recess_coupons_v2.stl/.scad`: prior reported change to 24 mm OD, 4 mm thick, four numbered samples with wider/tapered arm channels and enlarged boss pockets; user physically tested and chose **disc #2**. Earlier recommendation for printing: Bambu A1 regular PLA, 0.20 mm layer, no supports, 3 walls, 15% infill, clean plate; Others > Bed Adhesion > outer brim only 5 mm wide, brim-object gap 0.1 mm. These settings were advised, not independently proven cause of success.
+3. V3 single disc `horn_disc_02_hub_only_v3.stl/.scad`: retain #2, REMOVE ALL horn-arm recesses, keep ONLY circular hub/boss pocket. Assistant reported OD 24 mm, thickness 4 mm, boss pocket 7.5 mm diameter x 0.7 mm deep, original two mounting holes, recessed `2H` marker. Fit not reported.
+4. V4 `horn_disc_hub_only_10mm_14p5mm_v4.stl/.scad`: user requested hub recess diameter 10 mm and screw holes 14.5 mm center-to-center; no arm channels; OD 24 mm, thickness 4 mm, pocket depth 0.7 mm. Fit not reported.
+5. **V5 LATEST** `horn_disc_hub_only_11mm_1mm_v5.stl/.scad`: user requested hub-only circular recess **11 mm diameter x 1 mm deep**, two screw holes **14.5 mm center-to-center**, disc **24 mm OD x 4 mm thick**, NO arm recesses. Assistant provided STL and editable SCAD in chat, asserted single watertight body flat at Z=0. **User says they will report how it prints/fits. V5 is untested physically; do not call it final or integrated into cradle.** Previous-turn file links/attachments are not proof files exist in a future session, and these source/binary files are NOT verified committed to GitHub. Inspect accessible attachments or rebuild/verify if needed.
 
-**Upright CAD design defect:** protruding narrow rail is the only build-plate contact in current orientation; broad body hangs over plate and needs supports, leaving ugly supported underside. Earlier assistant incorrectly advised 'lay broad face flat', but that is not possible with this geometry. Redesign the upright's geometry/orientation or split rail into separate printable piece rather than pretending support adjustments fix the root cause. Until reworked, supported surface may be rough. Previous suggested 0.20 mm top Z support gap at 0.20 layer, 3 top interface layers; these were suggestions, not proven successful.
+## Prototype fork / upright / cradle
+- [x] At least one fork base printed well on both sides; another fork base planned/attempted, successful total unconfirmed.
+- [x] Upright printed but supported underside ugly. **Model flaw:** narrow protruding rail contacts bed while broad panel hovers and requires support. Cannot simply lay broad face flat without modifying CAD. Redesign upright for support-free printing, possibly split rail from panel; preserve servo and pivot dimensions.
+- [x] User handled photographed parts and video demonstrated cradle has SINGLE passive peg opposite horn disc, as intended.
+- [ ] Complete fork/frame squareness and fit validated.
+- [ ] Passive pivot installed/sweep clearance validated.
+- [ ] Final horn geometry incorporated into complete laser cradle, screws installed and center servo screw accessible.
+- [ ] Laser OFF mounted; slider and rear charging port accessible; clearance and balance confirmed.
+- [ ] Powered tilt or pan tested. DO NOT imply full assembly completed.
 
-## Horn-interface test coupons
-- V1 `horn_disc_recess_coupons.stl` / `.scad` previously delivered via chat; user reports print result: 1 entirely spaghetti, 1 OK, 2 half spaghetti. DO NOT call V1 successful.
-- V2 `horn_disc_recess_coupons_v2.stl` / `.scad` previously delivered via chat; NOT confirmed copied into GitHub and NOT yet reported printed. Claimed design changes: four separately numbered discs; disc outer diameter 20→24 mm; thickness 3.2→4 mm; gap between discs 5→10 mm; hub recess diameters increased 1 mm; arm channels widened from 5.5 to 6.5–7.2 mm and tapered; enlarged recessed ID numbers 1–4. These values are prior assistant-reported and need actual source/STL inspection if regenerating; no guarantee of successful printing. Previous assistant asserted 'watertight' without a verified sliced toolpath/physical print.
-- V2 nominal center recess variations (from earlier V1 values +1 mm) may be 6.5, 7.5, 8.5, 9.5 mm, but inspect CAD before claiming exact geometry; arm recess and hub dimensions varied together so test doesn't isolate variables.
-- [ ] V2 successfully prints / adhesion verified.
-- [ ] User tests actual horn on numbered coupons, reports which allows both arms flush and center boss clear, holes align, no interference; then update cradle disc CAD with chosen result. Do not assume success or screw cradle before verification.
-
-## Bambu A1 / regular PLA print recipe for V2 coupons (latest user question was HOW TO ADD BRIM)
-In Bambu Studio **Prepare → Process: Global** (all four discs) → **Others → Bed Adhesion**: Brim type **Outer brim only**; Brim width **5 mm**; Brim-object gap **0.1 mm**. Then Slice Plate → Preview and verify brim surrounds EACH disc, disks lay flat with numbered faces up, no supports. Layer height 0.20 mm, 3 wall loops, 15% infill. Clean build plate first. Brims may merge if close; use Arrange/spread if needed. This is a proposed mitigation for adhesion, not a guarantee; if spaghetti repeats get photo and investigate first-layer adhesion, orientation, geometry and slicer preview before another revision.
-
-## Next action
-User may return with V2 print results, a photo, or difficulty finding/applying brim. Ask specifically whether V2 printed and which numbered coupon lets straight horn arms sit flush, if the print succeeded. If failure, diagnose from photos/slicer preview. After fit, revise horn-disc/cradle CAD, AND separately redesign rail-balanced upright for support-free printing. Do not call full tilt assembly complete or powered. Keep docs and actual CAD/STL assets synced when accessible; do not invent sandbox links to past-turn attachments.
+## Exact next action
+Wait for user's **V5 print and fit report**: does it print without spaghetti or warping, does 11 mm x 1 mm center boss recess allow both horn arms to sit FLUSH on otherwise flat disc, do 14.5 mm spaced holes align with chosen physical horn, and is center screw access viable? Ask only for relevant measurements/photos if fit fails. If good, update CAD of COMPLETE cradle with V5 pocket/hole geometry and correct printer orientation; separately redesign rail-balanced upright. Confirm sliced toolpaths and physical testing before assembly/powered claims. Do not buy speculative hardware or repeatedly request supplied SG90 CAD.
 
 ## Long-term constraints
-Bambu A1 regular PLA; compact U-fork; SG90 tilt plus SG90 direct-drive pan; removable laser (OFF during fit), preserve slider/USB; XIAO ESP32-C3 pre-header unit ordered; wall 5 V servo distribution with common ground, not via microcontroller regulator; future battery interface in V1; modular quick prints, verify before claiming success.
+Bambu A1, regular PLA, modular quick prints; compact U-fork tilt + SG90 direct-drive pan; removable 16.1 mm laser, never modify laser; SG90 servo supply from separate 5 V rail with shared GND, not controller regulator; XIAO ESP32-C3 ordered with headers, Dupont and lever connectors ordered, 5 V wall supply owned; V1 must leave future battery-module interface without reprinting core. Keep living GitHub docs updated on wrap and distinguish reported fit from CAD assertions.
