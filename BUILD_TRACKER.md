@@ -1,34 +1,31 @@
 # Laser Turret — Living Build Tracker
 
-**Last updated September 16, 2026 ~18:40 Austin. CURRENT STOP: V5 hub-only horn test disc delivered, user will print/test and report. NO V5 physical fit result yet.** Read [latest handoff](SESSION_HANDOFF_2026-09-16.md) first and historical requirements in [PROJECT_STATE.md](PROJECT_STATE.md). Historical Sep 15 status in PROJECT_STATE is superseded by these newer records.
+**LATEST SEPTEMBER 17, 2026: READ `SESSION_HANDOFF_2026-09-17.md` FIRST.** User's preferred full V4 inspection assembly is `Turret_V4.3mf` (identical to `Laser_Turret_V4_Observatory.3mf`). Preserve this version as the baseline. User received the tiny `Turret_V4_Minimal_Fit_Kit.3mf` and will return with its print and fit results; NONE REPORTED YET. Original binary files are not confirmed committed to GitHub; user received a portable archive in chat containing models and complete handoff. Older 2026-09-16 handoff and historical PROJECT_STATE checkpoints are superseded for current progress.
 
 ## Physically validated
-- [x] Removable laser clip fits: nominal 15.45 mm ID; laser diameter 16.1 mm, length 96.5 mm.
-- [x] Smallest SG90 body-fit coupon (~22.4 mm nominal) fits.
-- [x] Passive pivot: second-largest coupon, nominal 3.35 mm bore with 3.0 mm peg, fits best.
-- [x] Straight double-sided servo horn selected; original cradle disc holes aligned physically. One-sided horn too short. Four SG90 servos owned; nominal CAD previously supplied.
-- [x] Raised circular horn center boss (~0.5 mm tall user estimate) keeps arms from sitting flush on flat cradle disc.
-- [x] V2 four-disc horn recess coupons were printed sufficiently for a fit test; **user reports DISC #2 IS BEST.** Do not infer all four printed perfectly or that #2 is fully flush: the user subsequently requested removing arm channels and enlarging the boss pocket.
+- Removable laser clip nominal ~15.45 mm ID fits actual 16.1 mm laser; laser length 96.5 mm.
+- Smallest SG90 body-fit coupon (~22.4 mm nominal) fits.
+- Passive pivot selected ~3.35 mm bore with 3.0 mm peg.
+- Straight double-sided servo horn selected; earlier initial holes aligned physically. V6 horn disc with **16 mm mounting holes center-to-center WORKS**, per user. Its outer diameter 24 mm, thickness 4 mm, hub-only recess 11 mm diameter x 1 mm depth. NO horn arm grooves. Supersedes V5 14.5 mm holes.
+- Original cradle blocks broke on handling due to ~0.5 mm root overlap. Reinforced V4 core CAD broadens connections to ~3 mm and braces, but no report of full loaded durability. Do not imply confirmed strength.
 
-## Horn-disc iteration: precise chronology
-1. V1 four-disc `horn_disc_recess_coupons.stl/.scad`: user reported 1 full spaghetti, 1 OK, 2 half spaghetti.
-2. V2 `horn_disc_recess_coupons_v2.stl/.scad`: prior reported change to 24 mm OD, 4 mm thick, four numbered samples with wider/tapered arm channels and enlarged boss pockets; user physically tested and chose **disc #2**. Earlier recommendation for printing: Bambu A1 regular PLA, 0.20 mm layer, no supports, 3 walls, 15% infill, clean plate; Others > Bed Adhesion > outer brim only 5 mm wide, brim-object gap 0.1 mm. These settings were advised, not independently proven cause of success.
-3. V3 single disc `horn_disc_02_hub_only_v3.stl/.scad`: retain #2, REMOVE ALL horn-arm recesses, keep ONLY circular hub/boss pocket. Assistant reported OD 24 mm, thickness 4 mm, boss pocket 7.5 mm diameter x 0.7 mm deep, original two mounting holes, recessed `2H` marker. Fit not reported.
-4. V4 `horn_disc_hub_only_10mm_14p5mm_v4.stl/.scad`: user requested hub recess diameter 10 mm and screw holes 14.5 mm center-to-center; no arm channels; OD 24 mm, thickness 4 mm, pocket depth 0.7 mm. Fit not reported.
-5. **V5 LATEST** `horn_disc_hub_only_11mm_1mm_v5.stl/.scad`: user requested hub-only circular recess **11 mm diameter x 1 mm deep**, two screw holes **14.5 mm center-to-center**, disc **24 mm OD x 4 mm thick**, NO arm recesses. Assistant provided STL and editable SCAD in chat, asserted single watertight body flat at Z=0. **User says they will report how it prints/fits. V5 is untested physically; do not call it final or integrated into cradle.** Previous-turn file links/attachments are not proof files exist in a future session, and these source/binary files are NOT verified committed to GitHub. Inspect accessible attachments or rebuild/verify if needed.
+## Current BEST version: V4 mini observatory
+- `Turret_V4.3mf` is an inspection assembly, NOT a print-ready plate. Exactly TWO servo references: tilt immediately beside laser, lower pan servo vertical. Upper dome ~120 mm OD mostly contains horizontal 96.5 x 16.1 mm laser, SINGLE front slit, rear closed, nominal screwless 3-lug twist lock. Round base ~84 mm OD x ~46 mm tall. Actual-reference servo/horn STEP models used.
+- Base includes *estimated, nonprintable* XIAO ESP32-C3 controller and two lever connectors (+5V and ground), not verified holders: footprints ~21x17x13 and 20x13x12 each. Need physical connector/header/USB/wire clearance, retention, routing, strain relief and future battery interface.
+- Outstanding: pan load-bearing support and harness twist/stops, full V4 closed-rear laser tilt sweep, dome tab tolerances/stops and removal, fastening access, assembled servo retention, printability, electronic packaging. Previous V3 sampled +/-25 degree movement DOES NOT establish V4 rear-closed clearance.
 
-## Prototype fork / upright / cradle
-- [x] At least one fork base printed well on both sides; another fork base planned/attempted, successful total unconfirmed.
-- [x] Upright printed but supported underside ugly. **Model flaw:** narrow protruding rail contacts bed while broad panel hovers and requires support. Cannot simply lay broad face flat without modifying CAD. Redesign upright for support-free printing, possibly split rail from panel; preserve servo and pivot dimensions.
-- [x] User handled photographed parts and video demonstrated cradle has SINGLE passive peg opposite horn disc, as intended.
-- [ ] Complete fork/frame squareness and fit validated.
-- [ ] Passive pivot installed/sweep clearance validated.
-- [ ] Final horn geometry incorporated into complete laser cradle, screws installed and center servo screw accessible.
-- [ ] Laser OFF mounted; slider and rear charging port accessible; clearance and balance confirmed.
-- [ ] Powered tilt or pan tested. DO NOT imply full assembly completed.
+## Current next print: miniature fit kit
+- `Turret_V4_Minimal_Fit_Kit.3mf`: FIVE selectable objects: XIAO footprint gauge, one lever footprint gauge for either identical bay, ring-lock curved sector, matching skirt/tab curved sector, and 16mm-spacing pan hole gauge. Six standalone STL filenames existed because 5V/GND gauges were duplicated. Read `Turret_V4_Minimal_Fit_Kit_READ_ME.txt` in portable archive.
+- Footprint guides only check XY, with 0.35 mm per-side clearance, NOT USB/header/lever-open/wire clearance or secure mounting.
+- Dome-sector ring coupon corrects observed **0.2 mm nominal deck/dome interference** by trimming backing rib to radius 57.2 mm; propagate to full V4 CAD AFTER test. Curved sectors alone cannot prove full dome latch or stops.
+- Pan coupon tests hole pattern: 26mm disc, two 2.3mm nominal holes spaced 16mm centers, 3.4mm center opening. Does NOT establish spline drive, screw length, servo thrust or wobble.
+- User will print/test kit and report next session. Recommended regular PLA on Bambu A1, 0.20mm layers, 3 walls, supports off if sliced preview permits; brim narrow dome sectors as needed.
 
-## Exact next action
-Wait for user's **V5 print and fit report**: does it print without spaghetti or warping, does 11 mm x 1 mm center boss recess allow both horn arms to sit FLUSH on otherwise flat disc, do 14.5 mm spaced holes align with chosen physical horn, and is center screw access viable? Ask only for relevant measurements/photos if fit fails. If good, update CAD of COMPLETE cradle with V5 pocket/hole geometry and correct printer orientation; separately redesign rail-balanced upright. Confirm sliced toolpaths and physical testing before assembly/powered claims. Do not buy speculative hardware or repeatedly request supplied SG90 CAD.
+## Next action after user's report
+1. Record outcome of each gauge, including unprinted pieces. Request photo or measurements only to diagnose a failed fit. Do not invent results.
+2. Fix only affected dimensions; propagate 0.2mm lock correction when confirmed. Measure real electronics incl. header height, opened levers, USB plug and wire bends.
+3. Check mechanism and closed-rear laser sweep, safe pan wire routing and load path, full dome twist-lock/collision/laser-removal access.
+4. Produce **V4.1** as NEW print-ready individual STLs and separate-object printable 3MF excluding nonprintable hardware; preserve V4 inspection baseline. Inspect Bambu sliced toolpaths/material and print only after validation.
 
-## Long-term constraints
-Bambu A1, regular PLA, modular quick prints; compact U-fork tilt + SG90 direct-drive pan; removable 16.1 mm laser, never modify laser; SG90 servo supply from separate 5 V rail with shared GND, not controller regulator; XIAO ESP32-C3 ordered with headers, Dupont and lever connectors ordered, 5 V wall supply owned; V1 must leave future battery-module interface without reprinting core. Keep living GitHub docs updated on wrap and distinguish reported fit from CAD assertions.
+## Locked broader requirements
+Compact mini-observatory rather than gun/barrel look; only one forward dome opening; screwless easy-removal top and removable laser, robust clip and structural roots; two SG90s; XIAO ESP32-C3 with headers and Dupont/lever connectors, 5V wall adapter external, servos from separate 5V power distribution with shared ground (not controller regulator). Future battery interface without reprinting core. No permanent laser modification. Keep models modular, small and editable.
